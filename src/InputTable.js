@@ -17,7 +17,7 @@ const InputTable = ({title}) => { //destructuring of props
   };
 
   return (
-    <div className="mt-4 bg-white shadow-lg inline-block p-4 m-4">
+    <div className="mt-4 bg-white shadow-xl inline-block p-4 m-4">
       <div className="text-center mb-4">
         <h2 className="text-xl font-semibold py-2">{title}</h2>
         <div className="w-16 mx-auto border-b-2"></div>
