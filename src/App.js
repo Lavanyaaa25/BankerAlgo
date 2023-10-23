@@ -1,6 +1,7 @@
 import React from 'react';
 import InputTable from './InputTable';
 import Counter from './Counter';
+import SequenceComp from './SequenceComp';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <InputTable title="Allocation" />
       <InputTable title="Maximum"/>
       <InputTable title="Need"/>
+      <SequenceComp />
     </div>
   );
 }
