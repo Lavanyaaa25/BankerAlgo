@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
+// InputTable.js
+import React, { useState, useEffect } from 'react';
 import Column from './Column';
 
-const InputTable = ({title}) => { //destructuring of props
-  const [tableData, setTableData] = useState([
-    ['', '', ''],
-    ['', '', ''],
-    ['', '', ''],
-    ['', '', ''],
-    ['', '', ''],
-  ]);
+const InputTable = ({ title, processCount, onDataChange }) => {
+  const [tableData, setTableData] = useState(generateInitialData(processCount, 3));
+
+  useEffect(() => {
+    setTableData(generateInitialData(processCount, 3));
+  }, [processCount]);
 
   const handleColumnChange = (e, rowIndex, colIndex) => {
     const newData = [...tableData];
     newData[rowIndex][colIndex] = e.target.value;
     setTableData(newData);
+    onDataChange(newData);
   };
 
   return (
@@ -41,6 +41,7 @@ const InputTable = ({title}) => { //destructuring of props
                   data={data}
                   onDataChange={(e) => handleColumnChange(e, rowIndex, colIndex)}
                   colIndex={colIndex}
+                  rowIndex={rowIndex}
                 />
               ))}
             </tr>
@@ -49,6 +50,11 @@ const InputTable = ({title}) => { //destructuring of props
       </table>
     </div>
   );
-};
+}
+
+// Helper function to generate initial data for the table
+function generateInitialData(rows, columns) {
+  return Array.from({ length: rows }, () => Array(columns).fill(''));
+}
 
 export default InputTable;

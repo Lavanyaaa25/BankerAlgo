@@ -1,29 +1,33 @@
+// Counter.js
 import React, { useState } from 'react';
 
-const Counter = ({name}) => {
-  const [count, setCount] = useState(10);
+const Counter = ({ name, onCountChange }) => {
+  const [count, setCount] = useState(5);
 
   const handleCountChange = (e) => {
     const newValue = parseInt(e.target.value, 10);
-    if (!isNaN(newValue) && newValue >= 0) {
+    if (!isNaN(newValue) && newValue >= 2 && newValue <= 10) {
       setCount(newValue);
-    } else if (e.target.value === "") {
-      setCount(0);
+      onCountChange(newValue); // Emit the new process count
     }
   };
 
   const increment = () => {
-    setCount(count + 1);
+    if (count < 10) {
+      setCount(count + 1);
+      onCountChange(count + 1); // Emit the new process count
+    }
   };
 
   const decrement = () => {
-    if (count > 0) {
+    if (count > 2) {
       setCount(count - 1);
+      onCountChange(count - 1); // Emit the new process count
     }
   };
 
   return (
-    <div className=" p-4 rounded-md shadow-xl inline-block m-4">
+    <div className="p-4 rounded-md shadow-xl inline-block m-4">
       <h2 className="text-xl font-semibold">Instances of {name}</h2>
       <div className="flex items-center my-2">
         <button className="bg-gray-500 text-white p-2 rounded-l" onClick={decrement}>
