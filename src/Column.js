@@ -1,4 +1,4 @@
-// Column.js
+
 import React from 'react';
 
 const Column = ({ data, onDataChange, colIndex, rowIndex }) => {

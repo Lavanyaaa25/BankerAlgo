@@ -1,17 +1,29 @@
 import React, { useState } from 'react';
 
-const Counter = ({name}) => {
-  const [count, setCount] = useState(10);
 
+  const Counter = ({ name, instanceCount, setInstanceCount, resourceIndex }) => {
+    const [count, setCount] = useState(instanceCount[resourceIndex]);
+
+  // const handleCountChange = (e) => {
+  //   const newValue = parseInt(e.target.value, 10);
+  //   if (!isNaN(newValue) && newValue >= 0) {
+  //     setCount(newValue);
+  //   } else if (e.target.value === "") {
+  //     setCount(0);
+  //   }
+  // };
   const handleCountChange = (e) => {
     const newValue = parseInt(e.target.value, 10);
     if (!isNaN(newValue) && newValue >= 0) {
-      setCount(newValue);
+      const newCount = [...instanceCount];
+      newCount[resourceIndex] = newValue;
+      setInstanceCount(newCount);
     } else if (e.target.value === "") {
-      setCount(0);
+      const newCount = [...instanceCount];
+      newCount[resourceIndex] = 0;
+      setInstanceCount(newCount);
     }
   };
-
   const increment = () => {
     setCount(count + 1);
   };
