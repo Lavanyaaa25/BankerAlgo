@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Column from './Column';
 
-const InputTable = ({ title, processCount, onDataChange }) => {
+const InputTable = ({ title, processCount, onDataChange,sub }) => {
   const [tableData, setTableData] = useState(generateInitialData(processCount, 3));
 
   useEffect(() => {
@@ -34,7 +34,8 @@ const InputTable = ({ title, processCount, onDataChange }) => {
         <tbody>
           {tableData.map((row, rowIndex) => (
             <tr key={rowIndex}>
-              <th className="p-2">P{rowIndex + 1}</th>
+              {sub==="1"?<th className="p-2">P{rowIndex + 1}</th>:<th className="p-2"></th>}
+             
               {row.map((data, colIndex) => (
                 <Column
                   key={colIndex}
