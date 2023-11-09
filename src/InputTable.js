@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import Column from './Column';
 
-const InputTable = ({ title, processCount, onDataChange,sub }) => {
+const InputTable = ({ title, processCount, onDataChange,sub, }) => {
   const [tableData, setTableData] = useState(generateInitialData(processCount, 3));
 
   useEffect(() => {
@@ -16,6 +16,7 @@ const InputTable = ({ title, processCount, onDataChange,sub }) => {
     onDataChange(newData);
   };
 
+  
   return (
     <div className="mt-4 bg-white shadow-xl inline-block p-4 m-4">
       <div className="text-center mb-4">
