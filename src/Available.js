@@ -3,7 +3,6 @@ import React from 'react';
 import Column from './Column';
 
 const AvailableMatrix = ({ availableMatrix }) => {
-    
   return (
     <div className="mt-4 bg-white shadow-xl inline-block p-4 m-4">
       <div className="text-center mb-4">
@@ -21,11 +20,11 @@ const AvailableMatrix = ({ availableMatrix }) => {
         </thead>
         <tbody>
           <tr>
-            <th className="p2">Available</th>
+            <th className="p-2">Available</th>
             {availableMatrix.map((data, colIndex) => (
               <Column
                 key={colIndex}
-                data={data.toString()}
+                data={data < 0 ? 'Invalid' : data.toString()} // Display 'Invalid' if the value is negative
                 colIndex={colIndex}
                 rowIndex={0} // Assuming available matrix is a single row
               />
