@@ -22,38 +22,6 @@ function App() {
   };
 
 
-  // const calculateAvailableMatrix = () => {
-  //   // Check if instances and allocationMatrix are completely filled
-  //   if (
-  //     instances.some((value) => value === 0) ||
-  //     allocationMatrix.some((row) => row.some((value) => value === ''))
-  //   ) {
-  //     alert('Please fill in all instances and allocation matrix values.');
-  //     return;
-  //   }
-
-  //   const allocatedSum = Array(3).fill(0);
-
-  //   // Calculate the sum of allocated resources for each process
-  //   for (let i = 0; i < processCount; i++) {
-  //     for (let j = 0; j < 3; j++) {
-  //       allocatedSum[j] += parseInt(allocationMatrix[i][j]) || 0;
-  //     }
-  //   }
-
-  //   // Subtract the allocated sum from total instances to get available resources
-  //   const availableMatrix = instances.map((total, index) => total - allocatedSum[index]);
-
-  //   // Check if availableMatrix has negative values
-  //   if (availableMatrix.some((value) => value < 0)) {
-  //     alert('Invalid data for Available Matrix. It should not have negative values.');
-  //     return;
-  //   }
-
-  //   setAvailableMatrix(availableMatrix);
-  //   setShowAvailableMatrix(true);
-  // };
-
 
   const calculateAvailableMatrix = () => {
     // Check if instances and allocationMatrix are completely filled
@@ -86,13 +54,6 @@ function App() {
     setAvailableMatrix(availableMatrix);
     setShowAvailableMatrix(true);
   };
-
-
-
-  // const toggleAvailableMatrix = () => {
-  //   calculateAvailableMatrix(); // Calculate the available matrix before showing it
-  //   setShowAvailableMatrix(!showAvailableMatrix);
-  // };
 
   const initializeMatrices = (count) => {
     const initialAllocationMatrix = Array.from({ length: count }, () => Array(3).fill(''));
@@ -152,6 +113,10 @@ function App() {
         <NeedMatrix allocationMatrix={allocationMatrix} maximumMatrix={maximumMatrix} />
       )}
 
+
+      {/* Render the AvailableMatrix component only when showAvailableMatrix is true */}
+      {showAvailableMatrix && <Available availableMatrix={availableMatrix} />}
+      
       <div className="button-container">
         <button
           className="flex sm:inline-flex justify-center items-center bg-gradient-to-tr from-pink-600 to-red-500 hover:from-pink-500 hover:to-red-400 active:from-pink-700 active:to-red-600 focus-visible:ring ring-pink-300 text-white font-semibold text-center rounded-md outline-none transition duration-100 px-5 py-2 calculate-button"
@@ -169,10 +134,6 @@ function App() {
         </button>
       </div>
 
-
-      {/* Render the AvailableMatrix component only when showAvailableMatrix is true */}
-      {showAvailableMatrix && <Available availableMatrix={availableMatrix} />}
-    
     </div>
   );
 }
