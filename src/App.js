@@ -164,57 +164,58 @@ function App() {
   }; 
 
 
+
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Banker's Algo Simulator</h1>
-
-      <div className="mb-4">
-        <Counter name="No of processes" onCountChange={handleProcessCountChange} />
+  
+      <div className="flex mb-4">
+        <div className="mr-8">
+          <Counter name="No of processes" onCountChange={handleProcessCountChange} />
+        </div>
+  
+        <div>
+          <InputTable title="Instances" processCount="1" sub="0" onDataChange={(data) => setInstances(data[0])} />
+        </div>
       </div>
-      <br></br>
-      <InputTable title="Instances" processCount="1" sub="0" onDataChange={(data) => setInstances(data[0])} />
-      <br></br>
+      <div className="flex space-x-4">
+        <div className="button-container">
+          <button
+            className="calculate-button bg-gradient-to-tr from-pink-600 to-red-500 hover:from-pink-500 hover:to-red-400 active:from-pink-700 active:to-red-600 focus-visible:ring ring-pink-300 text-white font-semibold text-center rounded-md outline-none transition duration-100 px-5 py-2"
+            onClick={calculateNeedMatrix}
+          >
+            Calculate Need
+          </button>
+        </div>
+        <div className="button-container">
+          <button
+            className="calculate-button bg-gradient-to-tr from-pink-600 to-red-500 hover:from-pink-500 hover:to-red-400 active:from-pink-700 active:to-red-600 focus-visible:ring ring-pink-300 text-white font-semibold text-center rounded-md outline-none transition duration-100 px-5 py-2"
+            onClick={calculateAvailableMatrix}
+          >
+            Show Available Matrix
+          </button>
+        </div>
+        <div className="button-container">
+          <button
+            className="calculate-button bg-gradient-to-tr from-pink-600 to-red-500 hover:from-pink-500 hover:to-red-400 active:from-pink-700 active:to-red-600 focus-visible:ring ring-pink-300 text-white font-semibold text-center rounded-md outline-none transition duration-100 px-5 py-2"
+            onClick={calculateSafeSequence}
+          >
+            Show SafeSequence
+          </button>
+        </div>
+      </div>
+  
       <InputTable title="Allocation" processCount={processCount} onDataChange={setAllocationMatrix} sub="1" />
       <InputTable title="Maximum" processCount={processCount} onDataChange={setMaximumMatrix} sub="1" />
-
-      {showNeedMatrix && (
-        <NeedMatrix needMatrix={needMatrix} />
-      )}
-
-
-      {/* Render the AvailableMatrix component only when showAvailableMatrix is true */}
+  
+      {showNeedMatrix && <NeedMatrix needMatrix={needMatrix} />}
       {showAvailableMatrix && <Available availableMatrix={availableMatrix} />}
-
       {showSafeSequence && <SafeSequence safeSequence={safeSequence} processCount={processCount} />}
-      
-      <div className="button-container">
-        <button
-          className="flex sm:inline-flex justify-center items-center bg-gradient-to-tr from-pink-600 to-red-500 hover:from-pink-500 hover:to-red-400 active:from-pink-700 active:to-red-600 focus-visible:ring ring-pink-300 text-white font-semibold text-center rounded-md outline-none transition duration-100 px-5 py-2 calculate-button"
-          onClick={calculateNeedMatrix}
-        >
-          Calculate Need
-        </button>
-      </div>
-      <div className="button-container">
-        <button
-          className="flex sm:inline-flex justify-center items-center bg-gradient-to-tr from-blue-500 to-indigo-500 hover:from-blue-400 hover:to-indigo-400 active:from-blue-600 active:to-indigo-600 focus-visible:ring ring-blue-300 text-white font-semibold text-center rounded-md outline-none transition duration-100 px-5 py-2 calculate-button"
-          onClick={calculateAvailableMatrix}
-        >
-          Show Available Matrix
-        </button>
-      </div>
-      <div className="button-container">
-        <button
-          className="flex sm:inline-flex justify-center items-center bg-gradient-to-tr from-blue-500 to-indigo-500 hover:from-blue-400 hover:to-indigo-400 active:from-blue-600 active:to-indigo-600 focus-visible:ring ring-blue-300 text-white font-semibold text-center rounded-md outline-none transition duration-100 px-5 py-2 calculate-button"
-          onClick={calculateSafeSequence}
-        >
-          Show SafeSequence
-        </button>
-      </div>
-
+  
+     
     </div>
   );
+  
 }
 
 export default App;
-
