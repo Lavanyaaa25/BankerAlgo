@@ -5,6 +5,7 @@ import InputTable from './InputTable';
 import Counter from './Counter';
 import NeedMatrix from './needMatrix';
 import Available from './Available';
+import SafeSequence from './safeSequence';
 
 // ... (existing imports)
 
@@ -14,6 +15,9 @@ function App() {
   const [allocationMatrix, setAllocationMatrix] = useState([]);
   const [maximumMatrix, setMaximumMatrix] = useState([]);
   const [availableMatrix, setAvailableMatrix] = useState([]);
+  const [needMatrix, setNeedMatrix] = useState([]);
+  const [safeSequence, setSafeSequence] = useState([]);
+  const [showSafeSequence, setShowSafeSequence] = useState(false);
   const [showNeedMatrix, setShowNeedMatrix] = useState(false);
   const [showAvailableMatrix, setShowAvailableMatrix] = useState(false);
 
@@ -21,7 +25,7 @@ function App() {
     setProcessCount(newCount);
   };
 
-
+  // *****************AVAILABLE MATRIX*****************
 
   const calculateAvailableMatrix = () => {
     // Check if instances and allocationMatrix are completely filled
@@ -88,13 +92,77 @@ function App() {
     return true;
   };
 
+  // *****************NEED MATRIX*****************
+
   const calculateNeedMatrix = () => {
-    if (validateMatrices()) {
-      setShowNeedMatrix(true);
-    } else {
-      alert('Invalid data. Please make sure every value in "Maximum" is greater than or equal to "Allocation" and all boxes are filled.');
+
+    if (!validateMatrices()) {
+          alert('Invalid data. Please make sure every value in "Maximum" is greater than or equal to "Allocation" and all boxes are filled.');
+          return;
+        }
+    for (let i = 0; i < allocationMatrix.length; i++) {
+      const needRow = [];
+      for (let j = 0; j < allocationMatrix[i].length; j++) {
+        const maxVal = parseInt(maximumMatrix[i][j]);
+        const allocatedVal = parseInt(allocationMatrix[i][j]);
+
+        if (!isNaN(maxVal) && !isNaN(allocatedVal)) {
+          needRow.push(maxVal - allocatedVal);
+        } else {
+          needRow.push('');
+        }
+      }
+      needMatrix.push(needRow);
     }
+    setNeedMatrix(needMatrix);
+    setShowNeedMatrix(true);
   };
+  
+  // *****************SAFE SEQUENCE*****************
+
+  const calculateSafeSequence = () => {
+
+    if(availableMatrix.length === 0 || needMatrix.length === 0)
+    {
+      alert('Calculate the Need and Available Matrix First');
+      return
+    }
+
+    if (!validateMatrices()) {
+      alert('Invalid input. Please check allocation and maximum matrices.');
+      return;
+    }
+  
+    const work = [...availableMatrix];
+    const finish = Array(processCount).fill(false);
+  
+    for (let k = 0; k < processCount; k++) {
+      for (let i = 0; i < processCount; i++) {
+        if (!finish[i]) {
+          let canAllocate = true;
+  
+          for (let j = 0; j < 3; j++) {
+            if (needMatrix[i][j] > work[j]) {
+              canAllocate = false;
+              break;
+            }
+          }
+  
+          if (canAllocate) {
+            for (let j = 0; j < 3; j++) {
+              work[j] += parseInt(allocationMatrix[i][j]);
+            }
+
+            finish[i] = true;
+            safeSequence.push(i + 1); 
+          }
+        }
+      }
+    }
+    setSafeSequence(safeSequence);
+    setShowSafeSequence(true);
+  }; 
+
 
   return (
     <div className="p-4">
@@ -110,12 +178,14 @@ function App() {
       <InputTable title="Maximum" processCount={processCount} onDataChange={setMaximumMatrix} sub="1" />
 
       {showNeedMatrix && (
-        <NeedMatrix allocationMatrix={allocationMatrix} maximumMatrix={maximumMatrix} />
+        <NeedMatrix needMatrix={needMatrix} />
       )}
 
 
       {/* Render the AvailableMatrix component only when showAvailableMatrix is true */}
       {showAvailableMatrix && <Available availableMatrix={availableMatrix} />}
+
+      {showSafeSequence && <SafeSequence safeSequence={safeSequence} processCount={processCount} />}
       
       <div className="button-container">
         <button
@@ -131,6 +201,14 @@ function App() {
           onClick={calculateAvailableMatrix}
         >
           Show Available Matrix
+        </button>
+      </div>
+      <div className="button-container">
+        <button
+          className="flex sm:inline-flex justify-center items-center bg-gradient-to-tr from-blue-500 to-indigo-500 hover:from-blue-400 hover:to-indigo-400 active:from-blue-600 active:to-indigo-600 focus-visible:ring ring-blue-300 text-white font-semibold text-center rounded-md outline-none transition duration-100 px-5 py-2 calculate-button"
+          onClick={calculateSafeSequence}
+        >
+          Show SafeSequence
         </button>
       </div>
 

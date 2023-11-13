@@ -2,30 +2,7 @@
 import React from 'react';
 import Column from './Column';
 
-const NeedMatrix = ({ allocationMatrix, maximumMatrix }) => {
-  const calculateNeedMatrix = () => {
-    const needMatrix = [];
-
-    for (let i = 0; i < allocationMatrix.length; i++) {
-      const needRow = [];
-      for (let j = 0; j < allocationMatrix[i].length; j++) {
-        const maxVal = parseInt(maximumMatrix[i][j]);
-        const allocatedVal = parseInt(allocationMatrix[i][j]);
-
-        if (!isNaN(maxVal) && !isNaN(allocatedVal)) {
-          needRow.push(maxVal - allocatedVal);
-        } else {
-          needRow.push('');
-        }
-      }
-      needMatrix.push(needRow);
-    }
-
-    return needMatrix;
-  };
-
-  const needMatrix = calculateNeedMatrix();
-
+const NeedMatrix = ({  needMatrix }) => { 
   return (
     <div className="mt-4 bg-white shadow-xl inline-block p-4 m-4">
       <div className="text-center mb-4">
