@@ -184,7 +184,7 @@ function App() {
             className="calculate-button bg-gradient-to-tr from-pink-600 to-red-500 hover:from-pink-500 hover:to-red-400 active:from-pink-700 active:to-red-600 focus-visible:ring ring-pink-300 text-white font-semibold text-center rounded-md outline-none transition duration-100 px-5 py-2"
             onClick={calculateNeedMatrix}
           >
-            Calculate Need
+            Calculate Need Matrix
           </button>
         </div>
         <div className="button-container">
@@ -192,7 +192,7 @@ function App() {
             className="calculate-button bg-gradient-to-tr from-pink-600 to-red-500 hover:from-pink-500 hover:to-red-400 active:from-pink-700 active:to-red-600 focus-visible:ring ring-pink-300 text-white font-semibold text-center rounded-md outline-none transition duration-100 px-5 py-2"
             onClick={calculateAvailableMatrix}
           >
-            Show Available Matrix
+            Calculate Available Matrix
           </button>
         </div>
         <div className="button-container">
